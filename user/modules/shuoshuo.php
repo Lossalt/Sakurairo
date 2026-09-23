@@ -37,11 +37,16 @@ add_action('pre_get_posts', function ($query) {
     if (!$query->is_main_query() || is_admin()) {
         return;
     }
-    if ((is_archive() || is_category() || is_author()) && !is_post_type_archive()) {
-        $query->set('post_type', array('post'));
-    }
+    // 说说归档：只出说说，覆盖主题默认的 post+shuoshuo 混排
     if (is_post_type_archive('shuoshuo')) {
+        $query->set('post_type', 'shuoshuo');
         $query->set('posts_per_page', 10);
+        return;
+    }
+
+    // 普通归档/分类/作者页：只出文章，不把说说混进博客时间线
+    if (is_archive() || is_category() || is_author()) {
+        $query->set('post_type', array('post'));
     }
 }, 20);
 
@@ -85,20 +90,24 @@ function personal_shuoshuo_build_content($text, array $images) {
 }
 
 /**
- * 从说说内容里拆出纯文字与图片 URL 列表
+ * 从说说内容里拆出正文与图片 URL 列表
+ *
+ * text_html  — 前台时间轴正文（保留段落等 HTML，去掉图片）
+ * text_plain — 后台预览用纯文本
  */
 function personal_shuoshuo_parse_content($raw) {
     $img_urls = array();
     if (preg_match_all('/<img[^>]+src=["\']([^"\']+)["\']/', (string) $raw, $m)) {
         $img_urls = $m[1];
     }
-    $text_only = preg_replace('/<!--.*?-->/s', '', (string) $raw);
-    $text_only = preg_replace('/<figure[^>]*>.*?<\/figure>/s', '', $text_only);
-    $text_only = preg_replace('/<img[^>]*>/', '', $text_only);
-    $text_only = trim(strip_tags($text_only));
+    $text_html = preg_replace('/<!--.*?-->/s', '', (string) $raw);
+    $text_html = preg_replace('/<figure[^>]*>.*?<\/figure>/s', '', $text_html);
+    $text_html = preg_replace('/<img[^>]*>/', '', $text_html);
+    $text_html = trim($text_html);
     return array(
-        'text'   => $text_only,
-        'images' => $img_urls,
+        'text_html'  => $text_html,
+        'text_plain' => trim(strip_tags($text_html)),
+        'images'     => $img_urls,
     );
 }
 
@@ -160,16 +169,34 @@ function shuoshuo_quick_post_page() {
     (function() {
         var container = document.getElementById('shuoshuo-image-fields');
         var addBtn = document.getElementById('shuoshuo-add-img');
-        var count = 0;
+
+        function renumber() {
+            var rows = container.children;
+            for (var i = 0; i < rows.length; i++) {
+                var label = rows[i].querySelector('.shuoshuo-img-idx');
+                if (label) {
+                    label.textContent = '#' + (i + 1);
+                }
+            }
+        }
+
         addBtn.addEventListener('click', function() {
-            if (count >= 9) { alert('最多9张图片'); return; }
-            count++;
+            if (container.children.length >= 9) {
+                alert('最多9张图片');
+                return;
+            }
             var row = document.createElement('div');
             row.style.cssText = 'display:flex;gap:8px;align-items:center;margin-bottom:6px;';
-            row.innerHTML = '<span style="color:#999;font-size:12px;min-width:20px;">#' + count + '</span>' +
+            row.innerHTML =
+                '<span class="shuoshuo-img-idx" style="color:#999;font-size:12px;min-width:20px;"></span>' +
                 '<input type="url" name="shuoshuo_images[]" placeholder="https://example.com/image.jpg" style="flex:1;padding:6px 10px;border:1px solid #ddd;border-radius:4px;font-size:13px;">' +
-                '<button type="button" class="button" onclick="this.parentElement.remove();count--;">✕</button>';
+                '<button type="button" class="button">✕</button>';
+            row.querySelector('button').addEventListener('click', function() {
+                row.remove();
+                renumber();
+            });
             container.appendChild(row);
+            renumber();
         });
     })();
     </script>
@@ -221,7 +248,7 @@ function shuoshuo_manage_page() {
                 <?php if ($query->have_posts()): while ($query->have_posts()): $query->the_post(); ?>
                     <?php
                     $parsed = personal_shuoshuo_parse_content(get_the_content());
-                    $text_only = $parsed['text'];
+                    $text_only = $parsed['text_plain'];
                     $edit_imgs = $parsed['images'];
                     $preview = mb_strlen($text_only) > 100 ? mb_substr($text_only, 0, 100) . '...' : $text_only;
                     if (!empty($edit_imgs)) {
@@ -400,7 +427,7 @@ function shuoshuo_load_more() {
             $last_month = $this_year_month;
 
             $parsed = personal_shuoshuo_parse_content(get_the_content());
-            $text_content = $parsed['text'];
+            $text_content = $parsed['text_html'];
             $img_urls = $parsed['images'];
 
             if ($is_new_month) {
