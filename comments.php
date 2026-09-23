@@ -171,6 +171,18 @@ function get_smilies_panel() {
             }
             add_filter('comment_form_defaults', 'custom_comment_logged_in_as');
 
+            // WP comment_form() 会对 submit_button 跑 sprintf( 4 个占位符 )。
+            // 自定义 HTML 里若含 %（URL 编码、CSS、按钮文案等）会被当成格式符，
+            // PHP 8+ 会 ArgumentCountError / ValueError，表现为评论区白屏、预加载卡住。
+            $submit_button_html = '<div class="form-submit">
+                                            <input name="submit" type="submit" id="submit" class="submit" value=" ' . esc_attr(iro_opt('comment_submit_button_text')) . ' ">' . $smilies_button . $img_upload .'
+                                            <label class="markdown-toggle">
+                                                <input type="checkbox" id="enable_markdown" name="enable_markdown">
+                                                <i class="fa-brands fa-markdown fa-sm"></i>
+                                            </label>
+                                            ' . wp_nonce_field('sakurairo_ajax_comment', 'sakurairo_comment_nonce', true, false) . '
+                                        </div>';
+
             $args = array(
                 'id_form'           => 'commentform',
                 'id_submit'         => 'submit',
@@ -181,16 +193,9 @@ function get_smilies_panel() {
                 'comment_field'     => '<div class="comment-textarea">
                                             <textarea placeholder="' . esc_attr(iro_opt('comment_placeholder_text')) . '" name="comment" class="commentbody" id="comment" rows="5" tabindex="4"></textarea>
                                             <label class="input-label">' . esc_html(iro_opt('comment_placeholder_text')) . '</label>
-                                        </div>' . $smilies_box . 
+                                        </div>' . $smilies_box .
                                         '<div id="upload-img-show"></div>',
-                'submit_button'     => '<div class="form-submit">
-                                            <input name="submit" type="submit" id="submit" class="submit" value=" ' . esc_attr(iro_opt('comment_submit_button_text')) . ' ">' . $smilies_button . $img_upload .'
-                                            <label class="markdown-toggle">
-                                                <input type="checkbox" id="enable_markdown" name="enable_markdown">
-                                                <i class="fa-brands fa-markdown fa-sm"></i>
-                                            </label>
-                                            ' . wp_nonce_field('sakurairo_ajax_comment', 'sakurairo_comment_nonce', true, false) . '
-                                        </div>',
+                'submit_button'     => str_replace('%', '%%', $submit_button_html),
                 'comment_notes_after'  => '',
                 'comment_notes_before' => '',
                 'fields'            => (!is_user_logged_in()?apply_filters('comment_form_default_fields', array(
