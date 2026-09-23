@@ -28,24 +28,41 @@ add_filter('register_post_type_args', function ($args, $post_type) {
 
 /**
  * 前台查询：
+ * - 说说归档：只出说说，走 archive-shuoshuo.php 时间轴
  * - 普通归档/分类/作者页只出 post（不把说说混进时间线）
- * - 说说归档每页 10 条
  *
- * priority 20：在主题 customize_query_functions 之后覆盖。
+ * priority 5 先记下原始 post_type；priority 20 在主题
+ * customize_query_functions 之后恢复/覆盖，避免被改成 post+shuoshuo
+ * 或误判成 post 归档导致说说一条都查不到。
  */
 add_action('pre_get_posts', function ($query) {
     if (!$query->is_main_query() || is_admin()) {
         return;
     }
-    // 说说归档：只出说说，覆盖主题默认的 post+shuoshuo 混排
-    if (is_post_type_archive('shuoshuo')) {
-        $query->set('post_type', 'shuoshuo');
+    $pt = $query->get('post_type');
+    if ($pt === 'shuoshuo' || (is_array($pt) && in_array('shuoshuo', $pt, true) && count($pt) === 1)) {
+        $query->set('personal_is_shuoshuo_archive', true);
+    }
+}, 5);
+
+add_action('pre_get_posts', function ($query) {
+    if (!$query->is_main_query() || is_admin()) {
+        return;
+    }
+
+    if ($query->get('personal_is_shuoshuo_archive')) {
+        $query->set('post_type', array('shuoshuo'));
         $query->set('posts_per_page', 10);
         return;
     }
 
-    // 普通归档/分类/作者页：只出文章，不把说说混进博客时间线
-    if (is_archive() || is_category() || is_author()) {
+    // 其它自定义类型归档保持原样，不强制改成 post
+    if ($query->is_post_type_archive()) {
+        return;
+    }
+
+    // 普通归档/分类/作者页：只出文章
+    if ($query->is_archive() || $query->is_category() || $query->is_author()) {
         $query->set('post_type', array('post'));
     }
 }, 20);
