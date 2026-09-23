@@ -54,6 +54,9 @@ if (!function_exists('iro_opt_update')) {
     }
 }
 
+// Personal feature modules (site-specific; keep core close to upstream)
+require get_template_directory() . '/user/modules/loader.php';
+
 $shared_lib_basepath = iro_opt('shared_library_basepath') ? get_template_directory_uri() : (iro_opt('lib_cdn_path', 'https://fastly.jsdelivr.net/gh/mirai-mamori/Sakurairo@') . IRO_VERSION);
 $core_lib_basepath = iro_opt('core_library_basepath') ? get_template_directory_uri() : (iro_opt('lib_cdn_path', 'https://fastly.jsdelivr.net/gh/mirai-mamori/Sakurairo@') . IRO_VERSION);
 
