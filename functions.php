@@ -54,6 +54,9 @@ if (!function_exists('iro_opt_update')) {
     }
 }
 
+// Shuoshuo (moments) module — frontend template: archive-shuoshuo.php
+require get_template_directory() . '/user/modules/shuoshuo.php';
+
 $shared_lib_basepath = iro_opt('shared_library_basepath') ? get_template_directory_uri() : (iro_opt('lib_cdn_path', 'https://fastly.jsdelivr.net/gh/mirai-mamori/Sakurairo@') . IRO_VERSION);
 $core_lib_basepath = iro_opt('core_library_basepath') ? get_template_directory_uri() : (iro_opt('lib_cdn_path', 'https://fastly.jsdelivr.net/gh/mirai-mamori/Sakurairo@') . IRO_VERSION);
 
@@ -3643,16 +3646,17 @@ function get_the_user_ip()
 
 //归档页信息缓存
 function get_archive_info($get_page = false) {
-    // 获取所有文章和说说
+    // 归档日历/月份弹层只收录文章；说说走独立时间轴（archive-shuoshuo）
     $args = [
         'posts_per_page' => -1,
         'orderby' => 'date',
         'order' => 'DESC',
-        'post_type' => array('post', 'shuoshuo'),
+        'post_type' => array('post'),
         'post_status'    => 'publish',
-        'suppress_filters' => false // 同时获取文章和说说
+        'suppress_filters' => false
     ];
     if ($get_page){
+        // 站点统计等场景仍汇总文章 + 说说 + 页面
         $args['post_type'] = array('post', 'shuoshuo', 'page');
     }
     $posts = get_posts($args);
