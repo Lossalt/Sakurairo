@@ -39,23 +39,45 @@ $prefix = 'iro_options';
   ) );
 
   Sakurairo_CSF::createSection($prefix, array(
-    'title' => __('Hello!','sakurairo_csf'),
-    'icon'        => 'fa fa-podcast',
+    'title' => __('关于本分支','sakurairo_csf'),
+    'icon'        => 'fa fa-code-fork',
     'fields'      => array(
 
       array(
         'type'    => 'heading',
-        'content' => __('Thank you to everyone who supports us!','sakurairo_csf'),
+        'content' => __('关于本分支 / About this fork','sakurairo_csf'),
       ),
 
       array(
         'type'    => 'content',
-        'content' => '<a href="https://afdian.com/a/mamori"><img alt="afdian" height="50" src="' . esc_url(get_template_directory_uri() . '/assets/vision/readme/afdian.webp') . '"></a><a href="https://liberapay.com/furina/donate"><img alt="liberapay" height="50" src="' . esc_url(get_template_directory_uri() . '/assets/vision/readme/liberapay.webp') . '"></a><a href="https://app.unifans.io/c/somekawahitomi"><img alt="unifans" height="50" src="' . esc_url(get_template_directory_uri() . '/assets/vision/readme/unifans.webp') . '"></a>',
-      ),
+        'content' => '<div style="max-width:820px;line-height:1.75">
+<h2 style="margin:0 0 6px">cjsy fork · 3.1.0-cjsy.1</h2>
+<p style="margin:0 0 16px;color:#888">自建博客长期维护的分支，非上游官方发布。</p>
 
-      array(
-        'type'    => 'content',
-        'content' => __('<img src="https://fuukei-api.nyat.icu/api/sponsors"  alt="Sponsor" width="100%" height="100%" />','sakurairo_csf'),
+<h3 style="margin:18px 0 8px">来历</h3>
+<p>本主题 fork 自 <a href="https://github.com/mirai-mamori/Sakurairo" target="_blank" rel="noopener">mirai-mamori/Sakurairo</a>（v3.0.11）。
+上游作者已将开发重心转向 <a href="https://github.com/mirai-mamori/Myriad" target="_blank" rel="noopener">Myriad</a>，Sakurairo 主线不再更新，
+因此由本分支接手，保证既有站点能继续用下去。</p>
+
+<h3 style="margin:18px 0 8px">与上游的主要差异</h3>
+<ul style="margin:0;padding-left:22px">
+<li><strong>资源全部内联</strong>：字体（Noto Serif SC / Noto Sans SC / Fira Code / Concert One，211 个 unicode-range 子集）、
+Font Awesome（6.7.2 / 5.15.4 / 4.7.0）与 Vision 素材（293 个）全部放在主题 <code>assets/</code> 目录，
+访客侧不再产生任何第三方 CDN 请求。</li>
+<li><strong>默认值指向本地</strong>：字体、图标、装饰素材的默认地址都是主题内路径；仍可在本设置页改回任意 CDN。</li>
+<li><strong>个人模块</strong>：<code>user/modules/</code> 下维护说说、本地曲库、页面模块等定制功能。</li>
+<li><strong>问题修复</strong>：评论表单 sprintf 转义、私密评论 nonce 校验、音频链接缓存过期、移动端禁止缩放等。</li>
+</ul>
+
+<h3 style="margin:18px 0 8px">相关链接</h3>
+<p><a href="https://github.com/Lossalt/Sakurairo" target="_blank" rel="noopener">代码仓库</a> ·
+<a href="https://github.com/Lossalt/Sakurairo/blob/main/CHANGELOG-cjsy.md" target="_blank" rel="noopener">更新日志</a> ·
+<a href="https://cjsy.cc" target="_blank" rel="noopener">博客</a></p>
+
+<h3 style="margin:18px 0 8px">版权与致谢</h3>
+<p style="color:#666;font-size:13px">原主题版权归 Fuukei 与 mirai-mamori 所有，遵循 GPL-2.0 许可；本分支的修改同样以 GPL-2.0 发布。
+如果想支持原作者，请前往上游仓库，本分支不设任何赞助渠道。</p>
+</div>',
       ),
 
     )
@@ -4149,7 +4171,7 @@ $prefix = 'iro_options';
 
       array(
         'type'    => 'content',
-        'content' => __('<img src="https://fuukei-api.nyat.icu/api/contributors" alt="Theme Contributors" width="100%" height="100%" />','sakurairo_csf'),
+        'content' => '<p>上游贡献者名单：<a href="https://github.com/mirai-mamori/Sakurairo/graphs/contributors" target="_blank" rel="noopener">GitHub Contributors</a></p>',
       ),
 
       array(
