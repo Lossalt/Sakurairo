@@ -78,6 +78,36 @@
 
 ---
 
+### 变更：只保留 GitHub 更新源
+
+原先主题提供三个更新源，其中两个（又拍云 / 官方测试源）都指向上游 `api.fuukei.org`，
+只发布 `mirai-mamori/Sakurairo` 的版本。对本 fork 来说，选它们等于把自己拉回上游代码、丢掉
+本分支的全部改动，属于**有害选项**，因此移除：
+
+- `functions.php` 的 `switch` 简化为唯一的 GitHub 检查器
+- 移除设置项 `iro_update_source`、`channel_validate_value`、`iro_update_channel`
+- 删除随之失效的 `options/update_source_github.webp`、`options/update_source_iro.webp`
+
+更新检测链路（PUC v5.1，`Vcs\GitHubApi::getUpdateDetectionStrategies`）：
+
+```
+1. releases/latest        —— 没有 Release 时返回 404
+2. 最高版本的 tag          —— 用 looksLikeVersion() 过滤 + version_compare 排序
+3. 分支本身
+```
+
+本仓库没有发 GitHub Release，所以实际走**第 2 条**。tag `3.1.0-cjsy.1` 能通过
+`looksLikeVersion()` 的正则（`-` 在允许的字符集内），且 `version_compare('3.1.0-cjsy.1','3.0.11') = 1`，
+会被识别为最新版本。
+
+已发布：`git tag 3.1.0-cjsy.1`（annotated）。后续发版只需递增版本号并打同名 tag，
+例如 `3.1.0-cjsy.2`。
+
+**注意**：更新检查需要服务器能访问 `api.github.com` 与 `codeload.github.com`。
+中国大陆机器常无法访问，会静默失败，需手动下载覆盖。
+
+---
+
 ## 待办（未在本版处理）
 
 | 项 | 说明 |
@@ -86,4 +116,3 @@
 | CodeMirror | `opt/fields/code_editor/` 的后台自定义 CSS/JS 编辑器依赖 `s4.zstatic.net`，被 5 个选项使用，需连同 addon/mode 动态加载一起搬迁。 |
 | Leaflet | `opt/fields/map/` 的地图字段，当前无任何选项使用，可不处理。 |
 | 随机封面图 266 张 | 见 `assets/random-img/README.md`。 |
-| 版本 tag | 仓库已有分支 `release/3.1.0-cjsy`，尚未打 tag。若要让 WordPress 自动更新生效，需补 `3.1.0-cjsy.1` tag。 |
