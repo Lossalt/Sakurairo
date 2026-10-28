@@ -20,6 +20,7 @@ add_action('template_redirect', function () {
         return;
     }
     delete_transient('time_archive');
+    delete_transient('sakurairo_site_stats');
     wp_safe_redirect(remove_query_arg('flush_archive'));
     exit;
 }, 5);

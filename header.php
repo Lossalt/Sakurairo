@@ -59,7 +59,7 @@ header('X-Frame-Options: SAMEORIGIN');
 <head>
     <meta name="theme-color"  content="<?php echo iro_opt('theme_skin'); ?>">
     <meta charset="<?php bloginfo('charset'); ?>">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
     <!-- 优化资源加载 -->
     <meta http-equiv="x-dns-prefetch-control" content="on">
@@ -74,8 +74,14 @@ header('X-Frame-Options: SAMEORIGIN');
     <?php wp_head(); ?>
     <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?>｜<?php bloginfo('description'); ?>" href="<?php bloginfo('rss2_url'); ?>" />
     
-    <link rel="preload" as="style" href="https://<?= esc_attr(iro_opt('gfonts_api', 'fonts.googleapis.com')); ?>/css?family=Noto+Serif+SC|Noto+Sans+SC|Fira+Code<?= esc_attr(iro_opt('gfonts_add_name')); ?>&display=swap">
-    <link rel="stylesheet" href="https://<?= esc_attr(iro_opt('gfonts_api', 'fonts.googleapis.com')); ?>/css?family=Noto+Serif+SC|Noto+Sans+SC|Fira+Code<?= esc_attr(iro_opt('gfonts_add_name')); ?>&display=swap" media="all">
+    <?php
+    /* cjsy-audit: 字体源可用 mu-plugin 中的 CJSY_GFONTS_API 覆盖；置空字符串则完全不用 webfont */
+    $cjsy_gfonts_api = defined( 'CJSY_GFONTS_API' ) ? CJSY_GFONTS_API : iro_opt( 'gfonts_api', 'fonts.googleapis.com' );
+    if ( $cjsy_gfonts_api ) :
+    ?>
+    <link rel="preload" as="style" href="https://<?= esc_attr($cjsy_gfonts_api); ?>/css?family=Noto+Serif+SC|Noto+Sans+SC|Fira+Code<?= esc_attr(iro_opt('gfonts_add_name')); ?>&display=swap">
+    <link rel="stylesheet" href="https://<?= esc_attr($cjsy_gfonts_api); ?>/css?family=Noto+Serif+SC|Noto+Sans+SC|Fira+Code<?= esc_attr(iro_opt('gfonts_add_name')); ?>&display=swap" media="print" onload="this.media='all'">
+    <?php endif; ?>
     <?php if (iro_opt('google_analytics_id')) : ?>
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=<?= esc_attr(iro_opt('google_analytics_id')); ?>"></script>

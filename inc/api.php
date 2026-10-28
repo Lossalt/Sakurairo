@@ -571,10 +571,11 @@ function meting_aplayer(WP_REST_Request $request)
         $data = $Meting_API->get_data($type, $id);
         if ($type === 'playlist') {
             $response = new WP_REST_Response($data, 200);
-            $response->set_headers(array('cache-control' => 'max-age=3600'));
+            // 不要缓存过久：链接里的 nonce 会过期，导致 LRC/音频 403
+            $response->set_headers(array('cache-control' => 'private, max-age=300'));
         } elseif ($type === 'lyric') {
             $response = new WP_REST_Response();
-            $response->set_headers(array('cache-control' => 'max-age=3600'));
+            $response->set_headers(array('cache-control' => 'max-age=600'));
             $response->set_headers(array('Content-Type' => 'text/plain; charset=utf-8'));
             $response->set_data($data);
         } else {
