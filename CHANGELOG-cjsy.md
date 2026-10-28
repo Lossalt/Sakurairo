@@ -56,12 +56,34 @@
 
 ---
 
+### 变更：设置首页改为本分支说明
+
+原「Hello!」分区是上游作者的赞助页（爱发电 / Liberapay / unifans 收款码，
+外加两张从 `fuukei-api.nyat.icu` 拉取的图片）。fork 继续保留容易让人误捐，整块替换为：
+
+- **来历**：从 `mirai-mamori/Sakurairo` v3.0.11 fork，上游转向 Myriad 后接手维护
+- **变化**：资源全部内联、默认值指向本地、个人模块、若干问题修复
+- **链接**：代码仓库 / 更新日志 / 博客
+- **版权**：原主题 GPL-2.0 归 Fuukei 与 mirai-mamori，本分支改动同样 GPL-2.0
+
+同时删除 `assets/vision/readme/`（3 张赞助配图）与贡献者外链图。
+
+### 修复：后台配图本地化导致的整站 500
+
+`CSF_Options` 的 `public $args` 是类属性默认值，只能写常量表达式。
+把 `esc_url(get_template_directory_uri())` 直接写进去会触发
+`Constant expression contains invalid operations`，且该类在**解析阶段**即崩，
+影响范围是整站而不只是后台。已改为在 `__construct` 中赋值（`wp_parse_args` 之前，
+保留调用方覆盖能力）。
+
+---
+
 ## 待办（未在本版处理）
 
 | 项 | 说明 |
 | --- | --- |
 | Prism.js 自托管 | 仅在「代码高亮方式 = Prism」时加载，`opt/options/theme-options.php` 里 `code_highlight_prism_autoload_path` 默认仍指向 jsDelivr。主站用 `code-syntax-block` 插件，不受影响。 |
-| CodeMirror / Leaflet | `opt/fields/` 里两个开发向字段的编辑器依赖，仍走 CDN，普通使用不会加载。 |
-| 后台设置页预览图 | `theme-options.php` 里少量 `<img>` 说明图仍是 CDN 地址，只影响设置页观感，不影响前台。 |
+| CodeMirror | `opt/fields/code_editor/` 的后台自定义 CSS/JS 编辑器依赖 `s4.zstatic.net`，被 5 个选项使用，需连同 addon/mode 动态加载一起搬迁。 |
+| Leaflet | `opt/fields/map/` 的地图字段，当前无任何选项使用，可不处理。 |
 | 随机封面图 266 张 | 见 `assets/random-img/README.md`。 |
 | 版本 tag | 仓库已有分支 `release/3.1.0-cjsy`，尚未打 tag。若要让 WordPress 自动更新生效，需补 `3.1.0-cjsy.1` tag。 |
