@@ -19,7 +19,7 @@
 | Font Awesome 6.7.2（前台） | `s4.zstatic.net` | `assets/fontawesome/6.7.2/` | 396 KB |
 | Font Awesome 5.15.4（后台面板） | `s4.zstatic.net` | `assets/fontawesome/5.15.4/` | 176 KB |
 | Font Awesome 4.7.0（后台兼容） | `s4.zstatic.net` | `assets/fontawesome/4.7.0/` | 108 KB |
-| Vision 装饰素材（49 个） | `s.nmxc.ltd/sakurairo_vision/@3.0` | `assets/vision/` | 2.6 MB |
+| Vision 素材（293 个：背景 / 加载动画 / 社交图标 / 评论表情 / UA 图标） | `s.nmxc.ltd/sakurairo_vision/@3.0`、`@2.7` | `assets/vision/` | 6.8 MB |
 
 字体原样保留 Google 的 211 个 `unicode-range` 子集切分——浏览器只下载页面实际用到的字形，
 平均单页仍然只有几十 KB，不会因为自托管而变慢。

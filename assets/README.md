@@ -19,7 +19,7 @@ assets/
 │   ├── 6.7.2/                 # 前台图标
 │   ├── 5.15.4/                # 后台设置面板图标
 │   └── 4.7.0/                 # 后台兼容（apply_filters('csf_fa4', true) 时启用）
-├── vision/                    # 主题装饰素材（背景、加载动画、设置页预览图等）
+├── vision/                    # 主题装饰素材（背景、加载动画、表情、社交图标等，293 个）
 └── random-img/                # 预留：随机封面图，默认不随仓库分发
 ```
 
@@ -42,6 +42,6 @@ assets/
 | Noto Sans SC | — | SIL OFL 1.1 |
 | Fira Code | — | SIL OFL 1.1 |
 | Concert One | — | SIL OFL 1.1 |
-| Vision 素材 | @3.0 | 沿用上游 [Fuukei/Sakurairo_Vision](https://github.com/Fuukei/Sakurairo_Vision) 仓库授权 |
+| Vision 素材 | @3.0 / @2.7 | 沿用上游 [Fuukei/Sakurairo_Vision](https://github.com/Fuukei/Sakurairo_Vision) 仓库授权 |
 
 字体与图标库仅做**格式裁剪**（去除 ttf/eot/svg 冗余源、只保留 woff2），未修改字形。
