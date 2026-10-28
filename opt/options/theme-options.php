@@ -4063,7 +4063,7 @@ Font Awesome（6.7.2 / 5.15.4 / 4.7.0）与 Vision 素材（293 个）全部放�
       array(
         'type'    => 'submessage',
         'style'   => 'normal',
-        'content' => sprintf(__('Theme Sakurairo Version %s | Internal Version %s | <a href="https://github.com/mirai-mamori/Sakurairo">Project Address</a>','sakurairo_csf'), IRO_VERSION, INT_VERSION), 
+        'content' => sprintf(__('Theme Sakurairo Version %s | Internal Version %s | <a href="https://github.com/Lossalt/Sakurairo">Project Address</a>','sakurairo_csf'), IRO_VERSION, INT_VERSION), 
       ),
 
       array(
@@ -4072,47 +4072,12 @@ Font Awesome（6.7.2 / 5.15.4 / 4.7.0）与 Vision 素材（293 个）全部放�
       ),
 
       array(
-        'id'          => 'iro_update_source',
-        'type'        => 'image_select',
-        'title' => __('Theme Update Source','sakurairo_csf'),
-        'options'     => array(
-          'github'  => $vision_resource_basepath . 'options/update_source_github.webp',
-          'upyun'  => $vision_resource_basepath . 'options/update_source_wafpro.webp',
-          'official_building'  => $vision_resource_basepath . 'options/update_source_iro.webp',
-        ),
-        'desc' => __('If you are using a server set up in mainland China, please use the Upyun source or the official theme source as your theme update source','sakurairo_csf'),
-        'default'     => 'github'
-      ),
-
-      array(
-        'id' => 'channel_validate_value',
-        'type' => 'text',
-        'title' => __('Theme Update Test Channel Disclaimer','sakurairo_csf'),
-        'dependency' => array(
-          array( 'core_library_basepath', '==', 'true', '', 'true' ),
-          array( 'shared_library_basepath', '==', 'true' ),
-          array( 'iro_update_source', '==', 'official_building' ),
-        ),
-        'desc' => __('Please copy the text in quotes after <strong>ensure that you have carefully understood the risks associated with participating in the test and are willing to assume all consequences at your own risk</strong> (including but not limited to possible data loss) into the options text box <strong> "I agree and am willing to bear all unexpected consequences"</strong>','sakurairo_csf'),
-      ),
-
-      array(
-        'id' => 'iro_update_channel',
-        'type' => 'radio',
-        'title' => __('Theme Update Channel','sakurairo_csf'),
-        'dependency' => array(
-          array( 'channel_validate_value', '==', 'I agree and am willing to bear all unexpected consequences' ),
-          array( 'core_library_basepath', '==', 'true', '', 'true' ),
-          array( 'shared_library_basepath', '==', 'true' ),
-          array( 'iro_update_source', '==', 'official_building' ),
-        ),
-        'desc' => __('You can toggle the update channel here to participate in the testing of the new version','sakurairo_csf'),
-        'options' => array(
-          'stable' => __('Stable Channel','sakurairo_csf'),
-          'beta' => __('Beta Channel','sakurairo_csf'),
-          'preview' => __('Preview Channel','sakurairo_csf'),
-        ),
-        'default' => 'stable'
+        'type'    => 'submessage',
+        'style'   => 'normal',
+        'content' => '<p><strong>更新源：GitHub</strong>（<a href="https://github.com/Lossalt/Sakurairo" target="_blank" rel="noopener">Lossalt/Sakurairo</a>）</p>
+<p>本分支已移除又拍云与官方测试源——那两者由上游 <code>api.fuukei.org</code> 提供，只发布 mirai-mamori/Sakurairo 的版本。
+更新走 <code>releases/latest</code>，没有 Release 时回退到最高版本的 tag。</p>
+<p style="color:#888;font-size:13px;margin-bottom:0">若服务器无法访问 api.github.com 与 codeload.github.com（中国大陆常见），更新检查会静默失败，需手动下载覆盖。</p>',
       ),
 
       array(

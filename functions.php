@@ -86,16 +86,10 @@ function UpdateCheck($url, $flag = 'Sakurairo')
         $flag
     );
 }
-switch (iro_opt('iro_update_source')) {
-    case 'github':
-        $iroThemeUpdateChecker = UpdateCheck('https://github.com/Lossalt/Sakurairo', 'Sakurairo');
-        break;
-    case 'upyun':
-        $iroThemeUpdateChecker = UpdateCheck('https://api.fuukei.org/update/jsdelivr.json');
-        break;
-    case 'official_building':
-        $iroThemeUpdateChecker = UpdateCheck('https://api.fuukei.org/update/' . iro_opt('iro_update_channel') . '/check.json');
-}
+// cjsy: 更新源固定为 GitHub。
+// 原 upyun / official_building 两个分支走的是上游 api.fuukei.org，
+// 该服务只发布 mirai-mamori/Sakurairo 的版本，对本 fork 没有意义。
+$iroThemeUpdateChecker = UpdateCheck('https://github.com/Lossalt/Sakurairo', 'Sakurairo');
 
 add_action('init', 'set_user_locale');
 function set_user_locale() {
