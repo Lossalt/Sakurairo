@@ -23,7 +23,8 @@ if ( ! class_exists( 'CSF_Options' ) ) {
     public $args         = array(
 
       // framework title
-      'framework_title'         => '<img src="https://s.nmxc.ltd/sakurairo_vision/@3.0/series/login_logo.webp" style="width:50px;height:50px;transform:translateY(32%);margin-right: 13px;">iro 主题设置 <small> / Theme Options / テーマの設定</small>',
+      // cjsy: 类属性默认值必须是常量表达式，图片路径在 __construct 里填（见下）
+      'framework_title'         => '',
       'framework_class'         => '',
 
       // menu settings
@@ -90,6 +91,9 @@ if ( ! class_exists( 'CSF_Options' ) ) {
 
     // run framework construct
     public function __construct( $key, $params = array() ) {
+
+      // cjsy: 标题 logo 用主题内置资源，属性默认值里不能调函数
+      $this->args['framework_title'] = '<img src="' . esc_url( get_template_directory_uri() . '/assets/vision/series/login_logo.webp' ) . '" style="width:50px;height:50px;transform:translateY(32%);margin-right: 13px;">iro 主题设置 <small> / Theme Options / テーマの設定</small>';
 
       $this->unique   = $key;
       $this->args     = apply_filters( "csf_{$this->unique}_args", wp_parse_args( $params['args'], $this->args ), $this );

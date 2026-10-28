@@ -50,7 +50,7 @@ $prefix = 'iro_options';
 
       array(
         'type'    => 'content',
-        'content' => __('<a href="https://afdian.com/a/mamori"><img alt="afdian" height="50" src="https://s.nmxc.ltd/sakurairo_vision/@3.0/readme/afdian.webp"></a><a href="https://liberapay.com/furina/donate"><img alt="liberapay" height="50" src="https://s.nmxc.ltd/sakurairo_vision/@3.0/readme/liberapay.webp"></a><a href="https://app.unifans.io/c/somekawahitomi"><img alt="unifans" height="50" src="https://s.nmxc.ltd/sakurairo_vision/@3.0/readme/unifans.webp"></a>','sakurairo_csf'),
+        'content' => '<a href="https://afdian.com/a/mamori"><img alt="afdian" height="50" src="' . esc_url(get_template_directory_uri() . '/assets/vision/readme/afdian.webp') . '"></a><a href="https://liberapay.com/furina/donate"><img alt="liberapay" height="50" src="' . esc_url(get_template_directory_uri() . '/assets/vision/readme/liberapay.webp') . '"></a><a href="https://app.unifans.io/c/somekawahitomi"><img alt="unifans" height="50" src="' . esc_url(get_template_directory_uri() . '/assets/vision/readme/unifans.webp') . '"></a>',
       ),
 
       array(
@@ -3516,7 +3516,7 @@ $prefix = 'iro_options';
 
       array(
         'type'    => 'content',
-        'content' => __('<img src="https://s.nmxc.ltd/sakurairo_vision/@3.0/options/postchat.webp" width="25%" height="25%"/>','sakurairo_csf'),
+        'content' => '<img src="' . esc_url(get_template_directory_uri() . '/assets/vision/options/postchat.webp') . '" width="25%" height="25%"/>',
       ),
 
       array(
@@ -4035,7 +4035,7 @@ $prefix = 'iro_options';
 
       array(
         'type'    => 'content',
-        'content' => __('<img src="https://s.nmxc.ltd/sakurairo_vision/@3.0/series/headlogo.webp"  alt="Theme Information" />','sakurairo_csf'),
+        'content' => '<img src="' . esc_url(get_template_directory_uri() . '/assets/vision/series/headlogo.webp') . '"  alt="Theme Information" />',
       ),
 
       array(
