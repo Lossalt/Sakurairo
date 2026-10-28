@@ -490,7 +490,7 @@ if ($need_medals) {
                 // 如果没有图片，使用默认图片
                 if (empty($img)) {
                     if ($default_img_base === null) {
-                        $default_img_base = iro_opt('vision_resource_basepath', 'https://s.nmxc.ltd/sakurairo_vision/@3.0/');
+                        $default_img_base = iro_opt('vision_resource_basepath', get_template_directory_uri() . '/assets/vision/');
                     }
                     $img = $default_img_base . 'series/exhibition1.webp';
                 }

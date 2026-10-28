@@ -1,5 +1,14 @@
 **简体中文** | [繁體中文](README_tw.md) | [English](README_en.md) | [日本語](README_ja.md)
 
+> ### 本仓库说明
+>
+> 这是 [Lossalt](https://github.com/Lossalt) 维护的 Sakurairo fork，版本号形如 `3.1.0-cjsy.N`。
+> 上游已引导迁移至 [Myriad](https://github.com/mirai-mamori/Myriad)，Sakurairo 主线进入维护模式。
+>
+> 与上游的主要差异：**字体、Font Awesome、Vision 装饰素材全部内联到 `assets/`**，访客侧不再产生
+> 任何第三方 CDN 请求；同时保留个人模块（`user/modules/`：说说、本地曲库、页面模块等）。
+> 详见 [CHANGELOG-cjsy.md](CHANGELOG-cjsy.md) 与 [assets/README.md](assets/README.md)。
+
 [![image](https://s.nmxc.ltd/sakurairo_vision/@3.0/readme/banner-cn.webp)](https://github.com/mirai-mamori/Sakurairo)
 
 <h1 align="left">Theme Sakurairo </h1>

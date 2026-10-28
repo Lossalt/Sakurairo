@@ -76,7 +76,7 @@ $allowed_params = [
 	'iro_subkey'        // key的子键
 ];
 
-$vision_resource_basepath = iro_opt('vision_resource_basepath', 'https://s.nmxc.ltd/sakurairo_vision/@3.0/');
+$vision_resource_basepath = iro_opt('vision_resource_basepath', get_template_directory_uri() . '/assets/vision/');
 
 // 分组和设置项部分
 // 分组：每个分组至少包含 id、title、description、所属面板 panel

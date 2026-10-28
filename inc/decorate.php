@@ -820,38 +820,38 @@ body{
 ?>;
 }
 #video-add{
-    background-image: url(<?=iro_opt('vision_resource_basepath', 'https://s.nmxc.ltd/sakurairo_vision/@3.0/')?>basic/add.svg);
+    background-image: url(<?=iro_opt('vision_resource_basepath', get_template_directory_uri() . '/assets/vision/')?>basic/add.svg);
 }
 @media (max-width:860px) {
   .headertop.filter-dot::before {
-    background-image: url(<?=iro_opt('vision_resource_basepath', 'https://s.nmxc.ltd/sakurairo_vision/@3.0/')?>basic/grid.png);
+    background-image: url(<?=iro_opt('vision_resource_basepath', get_template_directory_uri() . '/assets/vision/')?>basic/grid.png);
   }
 }
 .headertop.filter-grid::before {
-  background-image: url(<?=iro_opt('vision_resource_basepath', 'https://s.nmxc.ltd/sakurairo_vision/@3.0/')?>basic/grid.png);
+  background-image: url(<?=iro_opt('vision_resource_basepath', get_template_directory_uri() . '/assets/vision/')?>basic/grid.png);
 }
 
 .headertop.filter-dot::before {
-  background-image: url(<?=iro_opt('vision_resource_basepath', 'https://s.nmxc.ltd/sakurairo_vision/@3.0/')?>basic/dot.gif);
+  background-image: url(<?=iro_opt('vision_resource_basepath', get_template_directory_uri() . '/assets/vision/')?>basic/dot.gif);
 }
 .loadvideo,.video-play {
-  background-image: url(<?=iro_opt('vision_resource_basepath', 'https://s.nmxc.ltd/sakurairo_vision/@3.0/')?>basic/play.svg);
+  background-image: url(<?=iro_opt('vision_resource_basepath', get_template_directory_uri() . '/assets/vision/')?>basic/play.svg);
 }
 
 .video-pause {
-  background-image: url(<?=iro_opt('vision_resource_basepath', 'https://s.nmxc.ltd/sakurairo_vision/@3.0/')?>basic/pause.svg);
+  background-image: url(<?=iro_opt('vision_resource_basepath', get_template_directory_uri() . '/assets/vision/')?>basic/pause.svg);
 }
 
 #loading-comments {
-background-image: url(<?=iro_opt('vision_resource_basepath', 'https://s.nmxc.ltd/sakurairo_vision/@3.0/')?>basic/puff-load.svg);
+background-image: url(<?=iro_opt('vision_resource_basepath', get_template_directory_uri() . '/assets/vision/')?>basic/puff-load.svg);
 }
 
 <?php if (iro_opt('wave_effects', 'true')): ?>
 #banner_wave_1 {
-    background: url(<?=iro_opt('vision_resource_basepath', 'https://s.nmxc.ltd/sakurairo_vision/@3.0/')?>basic/wave1.png) repeat-x;
+    background: url(<?=iro_opt('vision_resource_basepath', get_template_directory_uri() . '/assets/vision/')?>basic/wave1.png) repeat-x;
 }
 #banner_wave_2 {
-    background: url(<?=iro_opt('vision_resource_basepath', 'https://s.nmxc.ltd/sakurairo_vision/@3.0/')?>basic/wave2.png) repeat-x;
+    background: url(<?=iro_opt('vision_resource_basepath', get_template_directory_uri() . '/assets/vision/')?>basic/wave2.png) repeat-x;
 }
 .headertop{
     border-radius:0 !important;

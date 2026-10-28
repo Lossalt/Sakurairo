@@ -20,7 +20,8 @@ array(
   "EDIT" => __("Action Edit (only displays while user has sufficient permissions)","sakurairo_csf"),
 ));
 
-$vision_resource_basepath = get_option('iro_options')['vision_resource_basepath'] ?? 'https://s.nmxc.ltd/sakurairo_vision/@3.0/';
+// cjsy: 主题已内联 assets/vision/，默认不再依赖第三方 CDN
+$vision_resource_basepath = get_option('iro_options')['vision_resource_basepath'] ?? (get_template_directory_uri() . '/assets/vision/');
 
 $prefix = 'iro_options';
 
@@ -3983,7 +3984,7 @@ $prefix = 'iro_options';
         'type' => 'text',
         'title' => __('Fontawesome Source','sakurairo_csf'),
         'desc' => __('The source link of Fontawesome icons style','sakurairo_csf'),
-        'default' => "https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css",
+        'default' => get_template_directory_uri() . '/assets/fontawesome/6.7.2/css/all.min.css',
       ),
 
       array(
@@ -4110,7 +4111,7 @@ $prefix = 'iro_options';
         'type' => 'switcher',
         'title' => __('Provide Other Frontend Resource locally','sakurairo_csf'),
         'label' => __('Less important frontend resource in the theme\'s folder.','sakurairo_csf'),
-        'default' => false
+        'default' => true
       ),
 
       array(
@@ -4138,7 +4139,7 @@ $prefix = 'iro_options';
         'type' => 'text',
         'title' => __('Vision Resource Basepath','sakurairo_csf'),
         'desc' => __('This link directory structure needs to be consistent with the <a href="https://github.com/Fuukei/Sakurairo_Vision">Sakurairo Vision</a> repositories officially provided by fuukei, otherwise some resources 404 may appear. The image source officially provided by <a href="https://waf.pro/">WAFPRO</a> is adopted by default.','sakurairo_csf'),
-        'default' => "https://s.nmxc.ltd/sakurairo_vision/@3.0/"
+        'default' => get_template_directory_uri() . '/assets/vision/'
       ),
 
       array(

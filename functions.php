@@ -88,7 +88,7 @@ function UpdateCheck($url, $flag = 'Sakurairo')
 }
 switch (iro_opt('iro_update_source')) {
     case 'github':
-        $iroThemeUpdateChecker = UpdateCheck('https://github.com/mirai-mamori/Sakurairo', 'Sakurairo');
+        $iroThemeUpdateChecker = UpdateCheck('https://github.com/Lossalt/Sakurairo', 'Sakurairo');
         break;
     case 'upyun':
         $iroThemeUpdateChecker = UpdateCheck('https://api.fuukei.org/update/jsdelivr.json');
@@ -779,7 +779,7 @@ function get_author_class($comment_author_email, $user_id)
     }
 
     // $Lv = $author_count < 5 ? 0 : ($author_count < 10 ? 1 : ($author_count < 20 ? 2 : ($author_count < 40 ? 3 : ($author_count < 80 ? 4 : ($author_count < 160 ? 5 : 6)))));
-    echo "<span class=\"showGrade{$Lv}\" title=\"Lv{$Lv}\"><img alt=\"level_img\" src=\"" . iro_opt('vision_resource_basepath', 'https://s.nmxc.ltd/sakurairo_vision/@3.0/') . "comment_level/level_{$Lv}.svg\" style=\"height: 1.5em; max-height: 1.5em; display: inline-block;\"></span>";
+    echo "<span class=\"showGrade{$Lv}\" title=\"Lv{$Lv}\"><img alt=\"level_img\" src=\"" . iro_opt('vision_resource_basepath', get_template_directory_uri() . '/assets/vision/') . "comment_level/level_{$Lv}.svg\" style=\"height: 1.5em; max-height: 1.5em; display: inline-block;\"></span>";
 }
 
 /**
@@ -975,7 +975,7 @@ function visual_resource_updates($specified_version, $option_name, $new_value)
     if (version_compare($current_version, $specified_version, '>')) {
         $option_value = iro_opt($option_name);
         if (empty($option_value)) {
-            $option_value = "https://s.nmxc.ltd/sakurairo_vision/@3.0/";
+            $option_value = get_template_directory_uri() . "/assets/vision/";
         } else if (strpos($option_value, '@') === false || substr($option_value, strpos($option_value, '@') + 1) !== $new_value) {
             $option_value = preg_replace('/@.*/', '@' . $new_value, $option_value);
         }
@@ -1327,7 +1327,7 @@ function comment_mail_notify($comment_id)
         
         // 处理表情符号和特殊格式
         $message = convert_smilies($message);
-        $message = str_replace('{{', '<img src="' . iro_opt('vision_resource_basepath', 'https://s.nmxc.ltd/sakurairo_vision/@3.0/') . '/smilies/bilipng/emoji_', $message);
+        $message = str_replace('{{', '<img src="' . iro_opt('vision_resource_basepath', get_template_directory_uri() . '/assets/vision/') . '/smilies/bilipng/emoji_', $message);
         $message = str_replace('}}', '.png" alt="emoji" style="height: 1.5em; max-height: 1.5em; vertical-align: middle;">', $message);
         
         // 处理图片
@@ -1598,9 +1598,9 @@ function push_tieba_smilies()
     foreach ($tiebaname as $tieba_Name) {
         $grin = make_onclick_grin($tieba_Name,'tieba');
         // 选择面版
-        $return_smiles = $return_smiles . '<span title="' . $tieba_Name . '" '.$grin.'><img alt="tieba_smilie" loading="lazy" src="' . iro_opt('vision_resource_basepath', 'https://s.nmxc.ltd/sakurairo_vision/@3.0/') . 'smilies/' . $tiebaimgdir . 'icon_' . $tieba_Name . $smiliesgs . '" /></span>';
+        $return_smiles = $return_smiles . '<span title="' . $tieba_Name . '" '.$grin.'><img alt="tieba_smilie" loading="lazy" src="' . iro_opt('vision_resource_basepath', get_template_directory_uri() . '/assets/vision/') . 'smilies/' . $tiebaimgdir . 'icon_' . $tieba_Name . $smiliesgs . '" /></span>';
         // 正文转换
-        $wpsmiliestrans['::' . $tieba_Name . '::'] = '<span title="' . $tieba_Name . '" '.$grin.'><img alt="tieba_smilie" loading="lazy" src="' . iro_opt('vision_resource_basepath', 'https://s.nmxc.ltd/sakurairo_vision/@3.0/') . 'smilies/' . $tiebaimgdir . 'icon_' . $tieba_Name . $smiliesgs . '" /></span>';
+        $wpsmiliestrans['::' . $tieba_Name . '::'] = '<span title="' . $tieba_Name . '" '.$grin.'><img alt="tieba_smilie" loading="lazy" src="' . iro_opt('vision_resource_basepath', get_template_directory_uri() . '/assets/vision/') . 'smilies/' . $tiebaimgdir . 'icon_' . $tieba_Name . $smiliesgs . '" /></span>';
     }
     return $return_smiles;
 }
@@ -1636,9 +1636,9 @@ function push_bili_smilies()
     foreach ($name as $smilies_Name) {
         $grin = make_onclick_grin($smilies_Name,'Math');
         // 选择面版
-        $return_smiles = $return_smiles . '<span title="' . $smilies_Name . '" '.$grin.'><img alt="bili_smilies" loading="lazy" src="' . iro_opt('vision_resource_basepath', 'https://s.nmxc.ltd/sakurairo_vision/@3.0/') . 'smilies/' . $biliimgdir . 'emoji_' . $smilies_Name . $smiliesgs . '" /></span>';
+        $return_smiles = $return_smiles . '<span title="' . $smilies_Name . '" '.$grin.'><img alt="bili_smilies" loading="lazy" src="' . iro_opt('vision_resource_basepath', get_template_directory_uri() . '/assets/vision/') . 'smilies/' . $biliimgdir . 'emoji_' . $smilies_Name . $smiliesgs . '" /></span>';
         // 正文转换
-        $bilismiliestrans['{{' . $smilies_Name . '}}'] = '<span title="' . $smilies_Name . '" '.$grin.'><img alt="bili_smilies" loading="lazy" src="' . iro_opt('vision_resource_basepath', 'https://s.nmxc.ltd/sakurairo_vision/@3.0/') . 'smilies/' . $biliimgdir . 'emoji_' . $smilies_Name . $smiliesgs . '" /></span>';
+        $bilismiliestrans['{{' . $smilies_Name . '}}'] = '<span title="' . $smilies_Name . '" '.$grin.'><img alt="bili_smilies" loading="lazy" src="' . iro_opt('vision_resource_basepath', get_template_directory_uri() . '/assets/vision/') . 'smilies/' . $biliimgdir . 'emoji_' . $smilies_Name . $smiliesgs . '" /></span>';
     }
     return $return_smiles;
 }
@@ -1670,7 +1670,7 @@ function bili_smile_filter_rss($content)
     $type = is_webp() ? 'webp' : 'png';
     $biliimgdir = 'bili' . $type . '/';
     $smiliesgs = '.' . $type;
-    $content = str_replace('{{', '<img src="' . iro_opt('vision_resource_basepath', 'https://s.nmxc.ltd/sakurairo_vision/@3.0/') . 'smilies/' . $biliimgdir, $content);
+    $content = str_replace('{{', '<img src="' . iro_opt('vision_resource_basepath', get_template_directory_uri() . '/assets/vision/') . 'smilies/' . $biliimgdir, $content);
     $content = str_replace('}}', $smiliesgs . '" alt="emoji" style="height: 2em; max-height: 2em;">', $content);
     $content = str_replace('[img]', '<img src="', $content);
     $content = str_replace('[/img]', '" style="display: block;margin-left: auto;margin-right: auto;">', $content);
@@ -2174,7 +2174,7 @@ add_action('admin_head', 'custom_admin_open_sans_style');
 // WordPress Custom Font @ Admin
 function custom_admin_open_sans_font()
 {
-    echo '<link href="https://' . iro_opt('gfonts_api', 'fonts.googleapis.com') . '/css?family=Noto+Serif+SC&display=swap" rel="stylesheet">' . PHP_EOL;
+    echo '<link href="' . esc_url(get_template_directory_uri() . '/assets/fonts/fonts.css') . '" rel="stylesheet">' . PHP_EOL;
     echo '<style>body, #wpadminbar *:not([class="ab-icon"]), .wp-core-ui, .media-menu, .media-frame *, .media-modal *{font-family: "Noto Serif SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;}</style>' . PHP_EOL;
 }
 add_action('admin_head', 'custom_admin_open_sans_font');
@@ -2183,7 +2183,7 @@ add_action('admin_head', 'custom_admin_open_sans_font');
 function custom_admin_open_sans_font_frontend_toolbar()
 {
     if (current_user_can('manage_options') && is_admin_bar_showing()) {
-        echo '<link href="https://' . iro_opt('gfonts_api', 'fonts.googleapis.com') . '/css?family=Noto+Serif+SC&display=swap" rel="stylesheet">' . PHP_EOL;
+        echo '<link href="' . esc_url(get_template_directory_uri() . '/assets/fonts/fonts.css') . '" rel="stylesheet">' . PHP_EOL;
         echo '<style>#wpadminbar *:not([class="ab-icon"]){font-family: "Noto Serif SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;}</style>' . PHP_EOL;
     }
 }
@@ -2193,7 +2193,7 @@ add_action('wp_head', 'custom_admin_open_sans_font_frontend_toolbar');
 function custom_admin_open_sans_font_login_page()
 {
     if (stripos($_SERVER["SCRIPT_NAME"], strrchr(wp_login_url(), '/')) !== false) {
-        echo '<link href="https://' . iro_opt('gfonts_api', 'fonts.googleapis.com') . '/css?family=Noto+Serif+SC&display=swap" rel="stylesheet">' . PHP_EOL;
+        echo '<link href="' . esc_url(get_template_directory_uri() . '/assets/fonts/fonts.css') . '" rel="stylesheet">' . PHP_EOL;
         echo '<style>body{font-family: "Noto Serif SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;}</style>' . PHP_EOL;
     }
 }

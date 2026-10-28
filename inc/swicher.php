@@ -23,7 +23,7 @@ function font_end_js_control()
         return get_the_author_meta('display_name', 1);
     };
 
-    $vision_resource_basepath = iro_opt('vision_resource_basepath', 'https://s.nmxc.ltd/sakurairo_vision/@3.0/');
+    $vision_resource_basepath = iro_opt('vision_resource_basepath', get_template_directory_uri() . '/assets/vision/');
     $movies = iro_opt('cover_video') ?
         array(
             'url' => iro_opt('cover_video_link'),

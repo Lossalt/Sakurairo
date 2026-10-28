@@ -63,11 +63,17 @@ header('X-Frame-Options: SAMEORIGIN');
 
     <!-- 优化资源加载 -->
     <meta http-equiv="x-dns-prefetch-control" content="on">
-    <link rel="preconnect" href="https://<?= esc_attr(iro_opt('gfonts_api', 'fonts.googleapis.com')); ?>">
-    <link rel="preconnect" href="https://s4.zstatic.net" crossorigin>
+    <!-- cjsy: 字体与 Font Awesome 均已内联到主题，无需对外 preconnect -->
 
-    <link rel="preload" href="<?php echo (iro_opt('fontawesome_source','https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css') ?? 'https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css')?>" as="style">
-    <link rel="stylesheet" href="<?php echo (iro_opt('fontawesome_source','https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css') ?? 'https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css')?>" type="text/css" media="all" />
+    <?php
+    // cjsy: Font Awesome 已内联到 assets/fontawesome/，默认走本地
+    $cjsy_fa_src = iro_opt('fontawesome_source', get_template_directory_uri() . '/assets/fontawesome/6.7.2/css/all.min.css');
+    if (!$cjsy_fa_src) {
+        $cjsy_fa_src = get_template_directory_uri() . '/assets/fontawesome/6.7.2/css/all.min.css';
+    }
+    ?>
+    <link rel="preload" href="<?php echo esc_url($cjsy_fa_src); ?>" as="style">
+    <link rel="stylesheet" href="<?php echo esc_url($cjsy_fa_src); ?>" type="text/css" media="all" />
     
     <link rel="shortcut icon" href="<?= esc_url(iro_opt('favicon_link', '')); ?>" />
     
@@ -75,12 +81,25 @@ header('X-Frame-Options: SAMEORIGIN');
     <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?>｜<?php bloginfo('description'); ?>" href="<?php bloginfo('rss2_url'); ?>" />
     
     <?php
-    /* cjsy-audit: 字体源可用 mu-plugin 中的 CJSY_GFONTS_API 覆盖；置空字符串则完全不用 webfont */
-    $cjsy_gfonts_api = defined( 'CJSY_GFONTS_API' ) ? CJSY_GFONTS_API : iro_opt( 'gfonts_api', 'fonts.googleapis.com' );
-    if ( $cjsy_gfonts_api ) :
+    /*
+     * cjsy: 字体已内联到 assets/fonts/（Noto Serif SC / Noto Sans SC / Fira Code / Concert One，
+     * 共 211 个 unicode-range 子集），默认本地加载，不再依赖第三方字体 CDN。
+     * 如需改回外部源：define('CJSY_LOCAL_FONTS', false) 并在设置里填写 gfonts_api。
+     */
+    $cjsy_local_fonts = defined('CJSY_LOCAL_FONTS') ? CJSY_LOCAL_FONTS : true;
+    $cjsy_gfonts_api  = iro_opt('gfonts_api', '');
+    if ($cjsy_local_fonts) {
+        $cjsy_fonts_url = get_template_directory_uri() . '/assets/fonts/fonts.css';
+    } elseif ($cjsy_gfonts_api) {
+        $cjsy_fonts_url = 'https://' . $cjsy_gfonts_api . '/css?family=Noto+Serif+SC|Noto+Sans+SC|Fira+Code'
+            . iro_opt('gfonts_add_name') . '&display=swap';
+    } else {
+        $cjsy_fonts_url = '';
+    }
+    if ($cjsy_fonts_url) :
     ?>
-    <link rel="preload" as="style" href="https://<?= esc_attr($cjsy_gfonts_api); ?>/css?family=Noto+Serif+SC|Noto+Sans+SC|Fira+Code<?= esc_attr(iro_opt('gfonts_add_name')); ?>&display=swap">
-    <link rel="stylesheet" href="https://<?= esc_attr($cjsy_gfonts_api); ?>/css?family=Noto+Serif+SC|Noto+Sans+SC|Fira+Code<?= esc_attr(iro_opt('gfonts_add_name')); ?>&display=swap" media="print" onload="this.media='all'">
+    <link rel="preload" as="style" href="<?= esc_url($cjsy_fonts_url); ?>">
+    <link rel="stylesheet" href="<?= esc_url($cjsy_fonts_url); ?>" media="print" onload="this.media='all'">
     <?php endif; ?>
     <?php if (iro_opt('google_analytics_id')) : ?>
         <!-- Global site tag (gtag.js) - Google Analytics -->
